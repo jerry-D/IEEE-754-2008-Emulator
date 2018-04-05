@@ -1,0 +1,2 @@
+# IEEE-754-2008-Emulator
+Universal IEEE 754-2008 Floating-Point Emulator for Xilinx and Altera FPGAs.   If you need a synthesizable, "canned", hardware solution for your custom CPU, this is for you.  Put simply, this emulator implements in hardware the entire IEEE 754-2008 specification for half, single and double-precision binary formats, but with range limited to 5 bits and precision to 10 bits.  If your application requires greater range and precision, contact me. 
