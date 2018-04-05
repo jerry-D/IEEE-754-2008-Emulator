@@ -67,7 +67,7 @@ Also note that each of the statements shown below is a single instruction implem
 
 Below is a SYMPL Intermediate Language (IL) listing of all required homogeneous general-computational floating-point operators and actual usage.  It should be noted that, in most cases, the destination format can be specified as half, single or double precision, in that results are always stored in their respective intermediate result buffers as half-precision regardless.  However, take note that you can read them out in any format you want, in that they will automatically be converted to the binary format specified in the respective source operand format field, which can be mixed if you so desire.
 Also note that each of the statements shown below is a single instruction implemented in hardware with the number clocks to execute shown to the right.
-
+```
  rh.e    rtoi.15     = roundToIntegralTiesToEven:(fh:fdiv.15)          ;3 clocks
  rh.a    rtoi.14     = roundToIntegralTiesToAway:(fh:fdiv.15)          ;3 clocks   
  rh.z    rtoi.13     = roundToIntegralTowardZero:(fh:fdiv.15)          ;3 clocks   
@@ -115,10 +115,10 @@ Also note that each of the statements shown below is a single instruction implem
  fh      negate.3    = negate:(fs:work_2)                              ;3 clocks
  fh      abs.3       = abs:(fh:negate.3)                               ;3 clocks
  fh      copySign.3  = copySign:(fs:work_1, fh:negate.3)               ;3 clocks
-
+```
 ### Computational Signaling Operations 
 These comparison operators affect a single sticky bit in the status register called "CompareTrue" and should be followed by the IF (CompareTrue) statements provided below this list to change program flow:
-
+```
          compareSignalingEqual(fs:work_1, fs:work_2)                   ;1 clock
          compareQuietEqual(fs:work_1, fs:work_2)                       ;1 clock
          compareSignalingNotEqual(fs:work_1, fs:work_2)                ;1 clock
@@ -146,9 +146,9 @@ These comparison operators affect a single sticky bit in the status register cal
          IF NOT(compareTrue) GOTO: <label>                             ;1 clock                       
          IF (compareTrue) GOSUB: <label>                               ;1 clock                           
          IF NOT(compareTrue) GOSUB: <label>                            ;1 clock                           
-                                                                                                      
+```                                                                                                      
 ### Non-Computational Operations                                                                        
-                                                                                                      
+```                                                                                                      
          is754version1985()                                            ;1 clock
          IF (754version1985) GOTO: <label>                             ;1 clock
          IF NOT(754version1985) GOTO: <label>                          ;1 clock
@@ -283,9 +283,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          IF NOT(totalOrderMag) GOTO: <label>                           ;1 clock                                         
          IF (totalOrderMag) GOSUB: <label>                             ;1 clock                                         
          IF NOT(totalOrderMag) GOSUB: <label>                          ;1 clock                                         
-                                                          
+```                                                          
 ### Operations on Flag Subsets
-
+```
          lowerFlags(ub:#{invalid | overflow | inexact})                ;1 clock
          raiseFlags(ub:#{invalid | overflow | inexact})                ;1 clock
          testFlags(ub:#invalid)                                        ;1 clock
@@ -300,9 +300,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          IF NOT(aFlagRaised) GOTO: <label>                             ;1 clock                                         
          IF (aFlagRaised) GOSUB: <label>                               ;1 clock                                         
          IF NOT(aFlagRaised) GOSUB: <label>                            ;1 clock                                         
-
+```
 ### Resuming Alternate Exception Handling Attributes 
-        
+```        
          default(ub:#{overflow | inexact})                             ;1 clock
          raiseNoFlag(ub:#overflow)                                     ;1 clock                               
          
@@ -313,8 +313,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          
          enableAltImmediateHandlers(ub:#{invalid | overflow | inexact})   ;1 clock
          disableAltImmediateHandlers(ub:#{invalid | overflow | inexact})  ;1 clock
-
+```
 ### Set and Clear Alternate Exception Substitution Bits in Status Register
+```
          setSubsInexact                                                ;1 clock
          clearSubsInexact                                              ;1 clock
          setSubssubsUnderflow                                          ;1 clock    
@@ -325,24 +326,24 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          clearSubsDivByZero                                            ;1 clock    
          setSubsInvalid                                                ;1 clock    
          clearSubsInvalid                                              ;1 clock    
-
-
+```
 ### Implemented (but not required) Correctly Rounded Functions
+```
  fh      exp.15 = exp:(fh:log.15)                                      ;5 clocks
  fh      log.15 = log:(fs:work_1)                                      ;9 clocks
  fh      pow.14 = pown:(fs:work_1, xfs:work_2)                         ;13 clocks
  fh      pow.15 = pow:(fs:work_1, fs:work_2)                           ;13 clocks
  fh      pow.13 = powr:(xfs:work_1, fs:work_2)                         ;13 clocks
-
+```
 ### Implemented Correctly Rounded Trig Functions (these accept integer input in degrees) 
-
+```
  fh      sind.3 = sind:(uh:#30)                                        ;3 clocks
  fh      cosd.3 = cosd:(uh:#122)                                       ;3 clocks
  fh      tand.3 = tand:(uh:#223)                                       ;3 clocks
  fh      cotd.3 = cotd:(uh:#98)                                        ;3 clocks
-
+```
 ### Operations on Dynamic Modes
- 
+``` 
          getBinaryRoundingDirection()                                  ;1 clock
          Note:  the above instruction copies the 4-bit rounding direction attribute in the status register to byte location 0x0FE18 in a threads private RAM
          
@@ -355,9 +356,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          restoreModes(ub:savedModes)                                   ;1 clock
          defaultModes()                                                ;1 clock
                                                               
- 
+``` 
 ### Native Integer, Logical and Bit Test and Branch Operators (with some equivalent straignt assembly shown intermixed)         
-
+```
  uh      and.3 = and:(uh:work_3, uh:#0x5555)            ;2 clocks
  uh      or.3 = or:(uh:work_3, uh:#0x5555)              ;2 clocks                    
  uh      xor.3 = xor:(uh:work_3, uh:#0x5555)            ;2 clocks
@@ -480,8 +481,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          GOTO <label>                  ;1 clock
          GOSUB <label>                 ;1 clock
          RETURN                        ;1 clock
-
-### REPEAT Examples 
+```
+### REPEAT Examples
+```
  uw      AR0 = uw:#cnvFDCS.0        ;load AR0 with source address
  uw      AR1 = uw:#cnvTHCS.0        ;load AR1 with destination address      
          REPEAT uh:#15
@@ -496,10 +498,9 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          ;test divide by zero alternate immediate exception handling and exception capture registers
  fh      fdiv.14 = division:(fs:work_1, fs:#0x00000000)
  fh      copy.0 = fh:fdiv.14
-                                                               
-                   
+```                                                                                  
 ### Example Alternate Immediate Divide By Zero Exception Handler (Trap Service Routine) 
-      
+```      
  sh      *SP--[8] = uh:PC_COPY       ;save return address from floating-point divide by 0 exception, which is maskable
  ud      capt0_save = ud:CAPTURE0    ;read out CAPTURE0 register and save it
  ud      capt1_save = ud:CAPTURE1    ;read out CAPTURE1 register and save it
@@ -509,9 +510,8 @@ The following are non-exceptional predicates.  Each have a dedicated correspondi
          raiseFlags(ub:#divByZero)   ;raise divByZero flag   
  uw      TIMER = uw:#60000           ;put a new value in the timer
  sh      PC = uh:*SP++[8]            ;return from from trap
-    
+```    
 ### Simulating the Universal IEEE 754-2008 Floating-Point Emulator Design
-
 The example test case takes a 3D representation of an olive in single-precision binary .stl file format and performs a 3D transformation on all three axis, which includes:  scale(x, y, z), rotate(x, y, x) and translate(x, y, z).   The “olive” was created using the OpenSCAD, free open source 3D modeling environment and was exported in ASCII .stl file format.  To convert to binary, the “olive.stl” file was imported into “Blender”, free open source 3D modeling environment, and immediately exported back to .stl format, which, for Blender, is binary format.  Below is the “before” and “after” 3D rendering of the olive as viewed with OpenSCAD.  Note that the number of faces were kept to a minimum to facilitate faster simulation.
 
 The “Olive” Before and After
