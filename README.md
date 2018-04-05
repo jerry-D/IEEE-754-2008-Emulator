@@ -14,7 +14,7 @@ That's right.  Because each computational operator can have up to sixteen dedica
 
 This Universal IEEE 754-2008 Floating-Point Emulator can be easily connected to virtually any FPGA-based CPU by way of its generic memory interface, either directly or via a slave AXI-4 type connection.  If you are designing your own FPGA-based CPU and want to give it instant IEEE 754-2008 compliance, this is for you.
 
-It supports the three main binary formats to half-precision.  Meaning, that although most of the hardware operators in the current version are yield half-precision intermediate results, such operators can accept single and double-precision numbers (or any mix of half, single and double-precision)--directly--without the need to explicitly convert them to half-precision beforehand, so long as such numbers fall within the same range as half-precision binary formatted numbers.  If they fall outside of such range, use scaleB/logB to scale your data set first, then submit.
+It supports the three main binary formats to half-precision.  Meaning, that although most of the hardware operators in the current version yield half-precision intermediate results, such operators can accept single and double-precision numbers (or any mix of half, single and double-precision)--directly--without the need to explicitly convert them to half-precision beforehand, so long as such numbers fall within the same range as half-precision binary formatted numbers.  If they fall outside of such range, use scaleB/logB to scale your data set first, then submit.
 
 As required by IEEE 754-2008, half-precision subnormal numbers are also now fully supported, meaning that all floating-point computational operators can accept and produce subnormal numbers as input or as a result of computation, allowing generation and propagation of gradual underflow in a computational stream as required for specification compliance.
 
@@ -41,7 +41,7 @@ Florent de Dinechin and Bogdan Pasca.  Designing custom arithmetic data paths wi
 
 http://perso.citi-lab.fr/fdedinec/recherche/publis/2011-DaT-FloPoCo.pdf
 
-The simplest way to increase range and/or precision, is to use the existing operator wrappers as templates.  Care should be taken to properly adjust the number of “delay” registers to correspond to the latency of the substituted operator.  For instance, half-precision will generally require fewer stages than smaller range/precision will generally require more.
+The simplest way to increase range and/or precision, is to use the existing operator wrappers as templates.  Care should be taken to properly adjust the number of “delay” registers to correspond to the latency of the substituted operator.  For instance, single-precision will generally require more stages than half-precision, with double-precision requiring even more.
 
 ### Universal IEEE 754-2008 Emulator Instruction Set
 Also at this repository you will find the SYMPL 64-bit ISA instruction table that can be used with “CROSS-32” Universal Cross-Assembler to compile the example 3D-transform thread used in the example simulation.   The instruction table can be found in the ASM folder at this repository.  A detailed wiki for the Universal IEEE 754-2008 Emulator basic architecture and instruction set is being developed, which will take some time.  In the meantime, for a basic description instruction formatting, refer to the instruction table.
