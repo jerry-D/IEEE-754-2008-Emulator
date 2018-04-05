@@ -18,13 +18,15 @@ It supports the three main binary formats to half-precision.  Meaning, that alth
 
 As required by IEEE 754-2008, half-precision subnormal numbers are also now fully supported, meaning that all floating-point computational operators can accept and produce subnormal numbers as input or as a result of computation, allowing generation and propagation of gradual underflow in a computational stream as required for specification compliance.
 
-All specified default and directed rounding modes (nearest, positive/negative infinity, zero and away) are now fully supported by way of a rounding mode attribute field in the status register.  Alternatively, when no rounding mode attribute is set, the rounding mode can be specified on-the-fly within the instruction.  However, the directed rounding mode attribute enable bit, if set, in the status register overrides any specified in the instruction.
+All specified default and directed rounding modes (nearest, positive/negative infinity, zero and away) are now fully supported by way of a rounding mode attribute field in the status register.  Alternatively, when no rounding mode attribute is set, the rounding mode can be specified on-the-fly within the instruction.  The default rounding mode "00" is "nearest".  However, the directed rounding mode attribute enable bit in the status register, if set, overrides any specified in the instruction.
 
 ### Mixed Verilog and VHDL Design
 
 At this repository you will find all the synthesizable Verilog and VHDL source code needed to simulate and synthesize the instant  Universal IEEE 754-2008 Floating-Point Emulator.  The core processor is based on a custom, 64-bit, interleaving, multi-threading, GP-GPU Compute Unit design.  
 
 This design was developed using the “free” version of Xilinx Vivado, version 2015.1, targeted to a Kintex7, -3 speed grade. To obtain a copy of the latest version of Vivado, visit Xilinx' website at www.Xilinx.com 
+
+Note that this is a mixed Verilog and VHDL design.  Consequently, some "free" versions of various Altera tools may not accept it.  Also, the Altera tool may complain about duplicate VHDL modules.  If this is the case, you will need to rename the module(s) causing the problem.  If the Altera tool complains about mixed design, you may need to compile the offending module and generate a netlist for that module and then re-submit.  Xilinx Vivado "free" version has no problems accepting mixed designs or duplicate modules.
 
 After place and route, it was determined that this 64-bit design will clock at roughly 100MHz in a Kintex7 without constraints of any kind except for specifying what pin to use as the clock and at what clock rate. About 90% of the delays are attributed to routing and not logic propagation delays. 
 
@@ -57,7 +59,7 @@ http://www.cdadapter.com/download/cross32.pdf
 
 Additionally, this design comes with on-chip debug capability. Each thread has independent h/w breakpoints with programmable pass-counters, single-steps, 4-level deep PC discontinuity trace buffer, and real-time data exchange/monitoring. Thread registers can be read and modified in real-time without affecting ongoing processes. Threads can be independently or simultaneously breakpointed, single-stepped or released. Presently all this is done through a generic port which can be matted with a JTAG TAP, CPU I/O port, AXI4, etc. The test bench provided at this repository has examples of breakpoints, single-steps, etc.
 
-For more information on how to use the debug feature, study the test bench in the simulation folder at this repository.
+For more information on how to use the debug feature, study the test bench in the stimulus folder at this repository.
 
 ### Required Homogeneous General-Computational Floating-Point Operators Implemented in Hardware
 
