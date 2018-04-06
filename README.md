@@ -66,9 +66,6 @@ For more information on how to use the debug feature, study the test bench in th
 Below is a SYMPL Intermediate Language (IL) listing of all required homogeneous general-computational floating-point operators and actual usage.    Each operation is exactly one instruction.  It should be noted that, in most cases, the destination format can be specified as half, single or double precision, in that results are always stored in their respective intermediate result buffers as half-precision regardless.  However, take note that you can read them out in any format you want, in that they will automatically be converted to the binary format specified in the respective source operand format field, which can be mixed if so desired.
 
 Also note that each of the statements shown below is a single instruction implemented in hardware with the number clocks to execute shown to the right.
-
-Below is a SYMPL Intermediate Language (IL) listing of all required homogeneous general-computational floating-point operators and actual usage.  It should be noted that, in most cases, the destination format can be specified as half, single or double precision, in that results are always stored in their respective intermediate result buffers as half-precision regardless.  However, take note that you can read them out in any format you want, in that they will automatically be converted to the binary format specified in the respective source operand format field, which can be mixed if you so desire.
-Also note that each of the statements shown below is a single instruction implemented in hardware with the number clocks to execute shown to the right.
 ```
  rh.e    rtoi.15     = roundToIntegralTiesToEven:(fh:fdiv.15)          ;3 clocks
  rh.a    rtoi.14     = roundToIntegralTiesToAway:(fh:fdiv.15)          ;3 clocks   
