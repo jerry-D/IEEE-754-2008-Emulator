@@ -247,7 +247,7 @@ assign SP_input_is_subnormal = 1'b0; // subnormal SP inputs are invalid for FP 6
                //                                     |                 |                     underflow = 103 = 8'h67     |
                //                                     v                 v                                                 v
 //assign SP_input_is_invalid = wren && ((SP_input_exponent > 8'h8E)   /* leave signaling NaN term out */ || (SP_input_exponent < 8'h67 )) && ~SP_input_is_infinite && ~SP_input_is_NaN && ~SP_input_is_zero;
-assign DP_input_is_invalid = wren && SP_input_is_NaN && ~X[22];   //signaling NaN
+assign SP_input_is_invalid = wren && SP_input_is_NaN && ~X[22];   //signaling NaN
 
 assign SP_conv_overflow =  wren && (SP_rounding_overflow || (SP_input_exponent > 8'h8E)) && ~SP_input_is_invalid && ~SP_input_is_infinite && ~SP_input_is_NaN;
 
