@@ -97,7 +97,7 @@ input [63:0]h_wrdata;
 input h_rden;
 input [1:0] h_rdsize;
 input [17:0] h_rdaddrs;
-input [63:0] h_rddata; 
+output [63:0] h_rddata; 
 
 parameter     BTBS_ =  16'hFFA0;   // bit test and branch if set
 parameter     BTBC_ =  16'hFF98;   // bit test and branch if clear
