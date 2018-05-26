@@ -118,6 +118,9 @@ reg wren_del_0,
     wren_del_1; 
 
 reg [18:0] R610_q1;
+reg guard_q1; 
+reg round_q1; 
+reg sticky_q1;
 
 
 wire ready;
@@ -155,9 +158,18 @@ FPMul610 FPMul610(
       
 
 always @(posedge CLK or posedge RESET)
-    if (RESET) R610_q1 <= 19'b0;
-    else R610_q1 <= R610;
-    
+    if (RESET) begin
+        R610_q1   <= 19'b0;
+        guard_q1  <= 1'b0;
+        round_q1  <= 1'b0;
+        sticky_q1 <= 1'b0;
+    end    
+    else begin
+        R610_q1 <= R610;
+        guard_q1  <=  guard;
+        round_q1  <=  round;
+        sticky_q1 <=  sticky;
+    end        
           
 FP610_To_IEEE754_510_filtered FP610toIEEE510(
     .CLK               (CLK          ),
@@ -177,9 +189,9 @@ FP610_To_IEEE754_510_filtered FP610toIEEE510(
     .B_inexact_del     (B_inexact_del),     
     .X                 (R610_q1      ),     
     .Rq                (R18          ),     
-    .G_in              (guard        ),     
-    .R_in              (round        ),     
-    .S_in              (sticky       )      
+    .G_in              (guard_q1     ),     
+    .R_in              (round_q1     ),     
+    .S_in              (sticky_q1    )      
     );                       
 
 
