@@ -519,17 +519,11 @@ always @(*)
         resultExponent = 4'b0000;
         integerFractFinal = {32'h30303030, integerFractWork[103:64]}; 
     end
-    else if (fracTrailZeros==4'b1000) begin  //integer only but with at least one trailing zero
-        expSign = char_Plus;
-        resultSign = input_sign_del ? char_Minus : char_Plus;
-        resultExponent = {1'b0, intgrTrailZeros};
-        integerFractFinal = integerFractWork[103:32] >> ((intgrTrailZeros * 8) + 64);
-    end
     else begin                   //fraction part present with or without integer part
         expSign = char_Minus;
         resultSign = input_sign_del ? char_Minus : char_Plus;
         resultExponent = (8 - fracTrailZeros) + orderBias_del_5;
-        {bitbucket, integerFractFinal} = {24'h303030, integerFractWork} >> (fracTrailZeros * 8);
+        {bitbucket, integerFractFinal} = {32'h30303030, integerFractWork} >> (fracTrailZeros * 8);
     end    
 
 
